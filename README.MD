@@ -1,59 +1,91 @@
-# 🧠 CB_Trader — Terminal Oracle of Crypto Signals
+# CB_Trader �
 
 > _“The market speaks. CB_Trader listens.”_
 
-Welcome, traveler. You've uncovered **CB_Trader**, a cryptographic observatory woven from code, resilience, and signal lore. It’s a terminal-bound companion forged to track price motions, detect whispers of momentum, and log every tremor with care. No GUI. No frills. Just truth beneath candlesticks.
+**CB_Trader** is a terminal-native crypto signal bot that watches market tides, detects candlestick patterns, and logs its findings with technical rigor and a touch of mythic flair. It is not an auto-trader—it’s a vigilant signal oracle that empowers you to act based on insight, not automation.
 
-## 🌑 What CB_Trader Is
+## ✨ Features
 
-- A **signal-seeking shrine** built in Python.
-- A pure **terminal companion**—no clutter, just clarity.
-- Focused on **robust data logging**, **resilient APIs**, and **beautiful debugging**.
-- Tracks 5 cryptos by default: the canonical five—Bitcoin, Ethereum, XRP, Tether, BNB.
-- Emits buy/sell whispers based on technical ritual: SMA, RSI, and soon, MACD & EMA.
+- Monitor top coins across Coinbase & Gemini
+- Detects **Bullish & Bearish Engulfing** patterns.
+- Identifies **RSI** threshold crossings (overbought/oversold).
+- Spots **Golden Cross** and **Death Cross** EMA events (5/20 period).
+- Stores raw price history and trade signals in dual **SQLite** databases.
+- Enriches signals with "mythic" tags for poetic clarity.
 
-### 🔧 Core Philosophy
+## 🧱 Tech Stack
 
-CB_Trader believes in:
+- Python 3.x
+- SQLite
+- `requests` & `numpy`
 
-- **Persistence over flash**—SQLite stores every tick, every omen.
-- **Modularity as dogma**—every component is a self-contained prayer.
-- **Logs as scripture**—errors, events, and signals archived like sacred texts.
+## 📁 SQLite Databases
 
-### ⚙️ Project Rituals
+### `candle_data.db`
 
-Each file plays a part in the signal symphony:
+Stores raw OHLCV (Open, High, Low, Close, Volume) candles for all monitored assets, creating a permanent archive for backtesting and analysis.
 
-| File                | Role in the Rites                                                  |
-|---------------------|--------------------------------------------------------------------|
-| `main.py`           | The High Priest — orchestrates signal summons and terminal display |
-| `coinbase_api.py`   | The Messenger — fetches price and candlestick data from on high    |
-| `database.py`       | The Archivist — stores whispers into SQLite stone                  |
-| `analysis.py`       | The Sage — processes indicators and conjures buy/sell signals      |
-| `config.py`         | The Codex — holds your divine preferences                          |
-| `utils.py`          | The Lantern — logging, formatting, guiding the path                |
+### `potential_trades.db`
 
-### 🌀 Signal Lore (MVP)
+Logs every detected signal—including patterns, EMA crosses, and RSI events—for review.
 
-Here’s what happens when the bot awakens:
+## 📜 CLI Usage
 
-1. It whispers: “Fetching data…”
-2. It gazes into candlesticks.
-3. It invokes the sacred indicators (SMA, RSI).
-4. It logs every heartbeat, signal, error, and success.
-5. It speaks in the terminal when the time is right:  
-   👉 _Buy... The winds favor BTC._  
-   👉 _Sell... XRP's momentum wanes._
+```bash
+# Example: Fetch 1-hour candles for BTC-USD from Coinbase
+python cb_trader.py --exchange coinbase --symbol BTC-USD --interval 1h
+```
 
-### 📈 What Lies Ahead
+Optional flags (in development):
 
-Ritual expansion awaits:
+- `--evaluate_confidence true`: trigger Gemini scoring engine
+- `--save_signal true`: log pattern detections to DB
+- `--record_decision`: prompt user to confirm and log a trade action
 
-- More indicators (MACD, Bollinger, EMA)
-- Backtesting as dream-walking through past data
-- Performance logging like heartbeat scrolls
-- Mythic verbosity toggle to narrate signals with poetic gravitas
+## 🧠 Signal Analysis
+
+Includes:
+
+- RSI calculation (14-period)
+- EMA crossover detection (5 vs 20)
+- Pattern recognition engine (engulfing, hammer, etc.)
+- Optional mythic tags for poetic clarity
+
+Example Output:
+
+Signal: BUY | Pattern: Bullish Engulfing
+RSI: 29.8 | EMA: Golden Cross
+Confidence: 75/100 → ⚠️ Risk Level: Moderate
+User Action Required.
+
+## 🔐 Security Notes
+
+- API keys loaded via `.env` file
+- EmbedID integration planned for key vaulting, manifest logging, and user-bound access rituals
+
+## 🎴 Mythic Lore
+
+CB_Trader channels modular wisdom from Coddy and the Codex of EmbedID. Each signal is a glyph; each decision, a chapter in the user’s trading saga.
+
+## 🛠️ Setup
+
+1. Clone repo
+2. Create `.env` file with API keys:
+
+   COINBASE_KEY=xxx
+   GEMINI_KEY=yyy
+
+3. Run `cb_trader.py` with desired flags
+
+## 🧪 Dev Notes
+
+Next enhancements:
+
+- Confidence scoring engine
+- User decision logger with outcome tracking
+- Visual dashboard (optional)
+- Mythic module subscriptions
 
 ---
 
-Ready to add more sections like **Installation Rites**, **Usage Rituals**, or **Lore of the Logs**? I can help you modulate tone or rewrite pieces as if Coddy were narrating them in ancient tongue. Let's make this README _sing_ with resonance and ritual.
+Made with care, code, and cryptic rhythm by [James the Giblet]

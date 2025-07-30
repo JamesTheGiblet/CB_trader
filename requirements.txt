@@ -1,0 +1,8 @@
+requests
+pandas
+pandas-ta
+rich
+setuptools
+numpy
+PyJWT
+cryptography

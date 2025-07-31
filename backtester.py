@@ -6,7 +6,7 @@ from rich.table import Table
 from date_logger import init_databases
 from signal_analyzer import analyze_signals
 
-def run_backtest(symbol, interval, min_confidence, stop_loss_pct, take_profit_pct, fee_pct):
+def run_backtest(symbol, interval, min_confidence, stop_loss_pct, take_profit_pct, fee_pct, include_reasons, exclude_reasons):
     """
     Runs a backtest for a given symbol and parameters.
     """
@@ -19,7 +19,9 @@ def run_backtest(symbol, interval, min_confidence, stop_loss_pct, take_profit_pc
     sl_str = f"{stop_loss_pct}%" if stop_loss_pct else "N/A"
     tp_str = f"{take_profit_pct}%" if take_profit_pct else "N/A"
     fee_str = f"{fee_pct}%" if fee_pct else "0.0%"
-    console.print(f"Parameters: Min Confidence: [bold]{min_confidence}[/bold], Stop-Loss: [bold]{sl_str}[/bold], Take-Profit: [bold]{tp_str}[/bold], Fees: [bold]{fee_str}[/bold]")
+    console.print(f"Parameters: Min Confidence: [bold]{min_confidence}[/bold], Stop-Loss: [bold]{sl_str}[/bold], Take-Profit: [bold]{tp_str}[/bold], Fees: [bold]{fee_str}[/bold]",)
+    if include_reasons: console.print(f"Including Reasons: [bold cyan]{include_reasons}[/bold cyan]")
+    if exclude_reasons: console.print(f"Excluding Reasons: [bold red]{exclude_reasons}[/bold red]")
 
     # 1. Load data from SQLite
     con = sqlite3.connect("price_history.db")
@@ -153,5 +155,7 @@ if __name__ == "__main__":
     parser.add_argument("--stop_loss", type=float, help="Stop-loss percentage (e.g., 2.5 for 2.5%)")
     parser.add_argument("--take_profit", type=float, help="Take-profit percentage (e.g., 5.0 for 5.0%)")
     parser.add_argument("--fees", type=float, default=0.1, help="Trading fee percentage per trade (e.g., 0.1 for 0.1%)")
+    parser.add_argument("--include-reasons", type=str, help="Comma-separated list of reasons to include (e.g., 'Golden Cross,Hammer').")
+    parser.add_argument("--exclude-reasons", type=str, help="Comma-separated list of reasons to exclude (e.g., 'Bollinger').")
     args = parser.parse_args()
-    run_backtest(args.symbol, args.interval, args.min_confidence, args.stop_loss, args.take_profit, args.fees)
+    run_backtest(args.symbol, args.interval, args.min_confidence, args.stop_loss, args.take_profit, args.fees, args.include_reasons, args.exclude_reasons)

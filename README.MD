@@ -1,100 +1,131 @@
-# CB_Trader 🔱
+# 🔱 CB_Trader  
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
+## “Signal is myth when decoded with clarity.”
 
-> _“The market speaks. CB_Trader listens.”_
+**CB_Trader** is a terminal-native oracle that watches the tides of top cryptocurrencies, detects archetypal candlestick patterns, and logs its findings with mythic flair. It does not auto-trade—it invites you to act from insight, not automation.
 
-**CB_Trader** is a terminal-native crypto signal bot that continuously watches market tides for top cryptocurrencies, detects candlestick patterns, and logs its findings with technical rigor and a touch of mythic flair. It is not an auto-trader—it’s a vigilant signal oracle that empowers you to act based on insight, not automation.
+> Powered by: `Python`, `SQLite`, `requests`, `numpy`, `cryptography`, `rich`
+
+---
+
+## 📁 Modular Menu
+
+| Module               | Purpose                                 |
+|----------------------|------------------------------------------|
+| `📜 features.md`       | Signal types, indicators, logging        |
+| `🛠️ install.md`         | Setup instructions, vault creation       |
+| `📊 usage.md`           | CLI flags, example calls                 |
+| `🗺️ roadmap.md`         | Future upgrades + contributor notes      |
+| `🔐 vault.md`           | Secure key handling instructions         |
+| `🤝 contributing.md`    | Community rituals + code guidelines      |
+
+---
 
 ## ✨ Features
 
-- ✅ **Continuous Monitoring**: Runs 24/7, checking for signals at user-defined intervals.
-- ✅ **Multi-Asset Watcher**: Monitors the top 5 cryptocurrencies (BTC, ETH, SOL, XRP, ADA) in a single session.
-- ✅ **Pattern Recognition**: Detects key candlestick patterns like **Bullish & Bearish Engulfing**.
-- ✅ **Technical Indicators**:
-  - Identifies **RSI** (14-period) threshold crossings for overbought/oversold conditions.
-  - Spots **Golden Cross** and **Death Cross** EMA events (50/200 period).
-- ✅ **Confidence Scoring**: A weighted engine scores signals (0-100) based on the confluence of patterns, EMA crosses, and RSI.
-- ✅ **Dual Database Logging**:
-  - `price_history.db`: Stores raw OHLCV candles for analysis.
-  - `potential_trades.db`: Logs every detected signal for review.
-- 🎴 **Mythic Flair**: Enriches signals with "mythic" tags for poetic clarity.
+- ⌛ **Continuous Monitoring**  
+  Runs 24/7 on user-defined intervals across: `BTC`, `ETH`, `SOL`, `XRP`, `ADA`.
 
-## 🧱 Tech Stack
+- 🕯️ **Pattern Detection**  
+  Recognizes classic candlestick formations:
+  - Bullish Engulfing  
+  - Bearish Engulfing  
+  - Golden Cross (EMA 50/200)  
+  - Death Cross (EMA 50/200)  
+  - RSI (14-period) Overbought/Oversold  
 
-- Python 3.x
-- SQLite
-- `requests`, `numpy`, `python-dotenv`
-- `rich` (for terminal UI)
+- 🧮 **Confidence Scoring**  
+  A weighted engine scores each signal from 0–100 based on confluence strength.
 
-## 🛠️ Installation & Setup
+- 📑 **Dual Logging System**  
+  - `price_history.db`: Stores raw OHLCV candle data  
+  - `potential_trades.db`: Stores scored signal findings  
 
-1. **Clone the repository:**
+- 🎴 **Mythic Flair**  
+  Signals are enriched with poetic tags for narrative clarity during review.
 
-    ```bash
-    git clone https://github.com/your-username/cb_trader.git
-    cd cb_trader
-    ```
+---
 
-2. **Install dependencies:**
-    _(It's recommended to use a virtual environment)_
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. **Create a `.env` file** in the root directory and add your API keys:
-
-    ```env
-    COINBASE_KEY=xxx
-    COINBASE_SECRET=xxx
-    GEMINI_KEY=yyy
-    GEMINI_SECRET=yyy
-    ```
-
-## 📜 Usage
-
-Run the bot from your terminal. It will automatically monitor the top 5 symbols.
+## 🛠️ Installation
 
 ```bash
-# Example: Run the bot with a 4-hour interval and enable confidence scoring
-python cb_trader.py --exchange coinbase --interval 4h --evaluate_confidence
+git clone https://github.com/your-username/cb_trader.git
+cd cb_trader
+pip install -r requirements.txt
 ```
 
-### Command-Line Arguments
+Then create your encrypted vault for API keys:
 
-| Flag                  | Description                                      | Status         |
-| --------------------- | ------------------------------------------------ | -------------- |
-| `--exchange`          | The exchange to use (`coinbase` or `gemini`).    | ✅ Required    |
-| `--interval`          | The candle interval (e.g., `1h`, `4h`, `1d`).    | ✅ Required    |
-| `--evaluate_confidence` | Enable the confidence scoring engine.            | ✅ Implemented |
-| `--min_confidence`    | Filter signals below a confidence score.         | ✅ Implemented |
-| `--include-reasons`   | Only show signals matching these reasons.        | ✅ Implemented |
-| `--exclude-reasons`   | Do not show signals matching these reasons.      | ✅ Implemented |
-| `--record_decision`   | Prompt user to confirm and log a trade action.   | ✅ Implemented |
+```bash
+python setup_vault.py
+```
 
-## 📊 Example Output
+> 🔐 You’ll be prompted to set a master password.  
+> 🧹 Once initialized, consider deleting `setup_vault.py` for security.
+
+---
+
+## 📊 Usage
+
+Run the bot from terminal with flags:
+
+```bash
+python cb_trader.py --exchange coinbase --interval 4h --evaluate_confidence --min_confidence 70 --mythic
+```
+
+### 🔧 Command-Line Flags
+
+| Flag                   | Description                                       |
+|------------------------|---------------------------------------------------|
+| `--exchange`           | Choose `coinbase` or `gemini`                     |
+| `--interval`           | Candle interval (e.g., `1h`, `4h`, `1d`)          |
+| `--evaluate_confidence`| Enables scoring engine                            |
+| `--min_confidence`     | Filter signals below score threshold              |
+| `--include-reasons`    | Only show signals matching certain reasons        |
+| `--exclude-reasons`    | Exclude signals with specified causes             |
+| `--record_decision`    | Prompt for user action and log trade intent       |
+| `--mythic`             | Append poetic tags to signal outputs              |
+
+---
+
+## 🔍 Example Output
 
 ```plaintext
 [2023-10-27 14:00:00] Running check cycle...
   -> Checking BTC-USD...
     > Logged 350 candles for BTC-USD
     > Found 1 potential trade signals for BTC-USD!
-      → Signal: Buy | Reason: Golden Cross (EMA 50/200) | RSI: 58.5 | Confidence: 60/100
+      → Signal: Buy | Reason: Golden Cross (EMA 50/200) | RSI: 58.5 | Confidence: 60/100 | Tag: "Momentum Reawakens"
 ```
-
-## 🗺️ Roadmap
-
-The project's development plan is tracked in our Roadmap. Key upcoming features include a user decision logger and expanded technical indicators.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to open an issue or submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
-
-📜 License
-This project is licensed under the MIT License - see the LICENSE.md file for details.
 
 ---
 
-Made with care, code, and cryptic rhythm by [James the Giblet]
+## 🗺️ Roadmap
+
+Coming features:
+
+- Trade decision logger refinement  
+- Dashboard mode with multi-asset signal grid  
+- Webhook triggers for confidence ≥ threshold  
+- Archive viewer for past mythic-tagged signals  
+- Mythic pattern glossary module
+
+Roadmap maintained in `roadmap.md` with call-outs for contributors.
+
+---
+
+## 🤝 Contributing
+
+All modules are mythically modular—whether you’re enriching signal logic, refining poetic tags, or optimizing vault encryption, your pull requests are welcome.  
+Before submitting large changes, open an issue to discuss the impact.
+
+---
+
+## 📜 License
+
+MIT License — see `LICENSE.md` for full details
+
+---
+
+**Crafted in signal, sealed with lore by James The Giblet**  
+“Modularity is mythos. Signal is ritual. You are the clarity.”
